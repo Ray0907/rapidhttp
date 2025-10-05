@@ -95,19 +95,93 @@ except ConnectionError as e:
 Based on local benchmark tests (500 GET requests to localhost):
 
 ```
-Library      Requests/sec    Latency (median)    Relative Speed
------------------------------------------------------------------
-RapidHTTP    9,717          0.09ms              1.0x (baseline)
-requests     3,040          0.32ms              3.2x slower
-```
+======================================================================
+  Local Server Performance Test
+======================================================================
 
-JSON POST performance (300 requests with 3.8KB payload):
+✓ RapidHTTP loaded
+✓ requests loaded
 
-```
-Library      Requests/sec    Parse Time    Relative Speed
----------------------------------------------------------
-RapidHTTP    6,922          6.75μs        1.0x (baseline)
-requests     2,634          14.92μs       2.6x slower
+Checking server http://127.0.0.1:8000/ ...
+✓ Server ready
+
+======================================================================
+  Test 1: GET Requests
+======================================================================
+Configuration: 500 requests to http://127.0.0.1:8000/
+
+Testing RapidHTTP...
+
+Testing requests...
+
+Library      Success  Mean         Median       P95          Req/sec
+---------------------------------------------------------------------------
+RapidHTTP    500          0.10ms      0.09ms      0.15ms    9801.8
+requests     500          0.33ms      0.32ms      0.35ms    3071.3
+
+🏆 Fastest: RapidHTTP
+  • 3.65x faster than requests
+  • Saves 0.23ms per request
+
+======================================================================
+  Test 2: JSON POST Requests
+======================================================================
+Configuration: 300 requests, payload size: 3856 bytes
+
+Testing RapidHTTP JSON...
+
+Testing requests JSON...
+
+Library      Success  Request      Parse        Req/sec
+----------------------------------------------------------------------
+RapidHTTP    300          0.15ms      6.42μs    7115.1
+requests     300          0.38ms     13.75μs    2622.5
+
+🏆 Fastest: RapidHTTP
+  • 2.59x faster requests than requests
+  • 2.14x faster JSON parsing than requests
+
+======================================================================
+  Test 3: JSON Parser Performance (Real HTTP Requests)
+======================================================================
+
+Small JSON (49 bytes, 5000 iterations):
+
+Testing RapidHTTP JSON parser...
+
+Testing requests JSON parser...
+
+Library      Iterations   Median       Mean         Ops/sec
+----------------------------------------------------------------------
+RapidHTTP    5000             0.83μs      0.84μs   1186081
+requests     5000             1.92μs      1.95μs    514108
+  → RapidHTTP is 2.30x faster than requests
+
+Medium JSON (5781 bytes, 1000 iterations):
+
+Testing RapidHTTP JSON parser...
+
+Testing requests JSON parser...
+
+Library      Iterations   Median       Mean         Ops/sec
+----------------------------------------------------------------------
+RapidHTTP    1000             9.33μs      9.32μs    107249
+requests     1000            20.29μs     20.88μs     47904
+  → RapidHTTP is 2.17x faster than requests
+
+Large JSON (42219 bytes, 500 iterations):
+
+Testing RapidHTTP JSON parser...
+
+Testing requests JSON parser...
+
+Library      Iterations   Median       Mean         Ops/sec
+----------------------------------------------------------------------
+RapidHTTP    500            103.10μs    117.94μs      8479
+requests     500            259.21μs    270.01μs      3704
+  → RapidHTTP is 2.51x faster than requests
+
+======================================================================
 ```
 
 _Benchmarks run on MacBook Pro M1, Python 3.11. Results may vary based on system and network conditions._
