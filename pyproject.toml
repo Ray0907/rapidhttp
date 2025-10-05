@@ -1,0 +1,51 @@
+[build-system]
+requires = ["maturin>=1.0,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "rapidhttp"
+version = "0.1.0"
+description = "The fastest, most reliable Python HTTP client - 100% requests API compatible with 10-15x performance"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "Apache-2.0"}
+authors = [
+    {name = "rapidhttp contributors"}
+]
+keywords = ["http", "requests", "client", "performance", "rust", "async"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Rust",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "certifi>=2017.4.17",
+    "charset-normalizer>=2,<4",
+    "idna>=2.5,<4",
+    "urllib3>=1.21.1,<3",
+    "orjson>=3.10,<4",
+]
+
+[project.optional-dependencies]
+socks = ["PySocks>=1.5.6,!=1.5.7"]
+use-chardet-on-py3 = ["chardet>=3.0.2,<6"]
+
+[project.urls]
+Homepage = "https://github.com/Ray0907/rapidhttp"
+Documentation = "https://github.com/Ray0907/rapidhttp"
+Repository = "https://github.com/Ray0907/rapidhttp"
+"Bug Tracker" = "https://github.com/Ray0907/rapidhttp/issues"
+
+[tool.maturin]
+python-source = "python"
+module-name = "rapidhttp._rapidhttp"
+features = ["pyo3/extension-module"]
