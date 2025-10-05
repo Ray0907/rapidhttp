@@ -92,6 +92,10 @@ except ConnectionError as e:
 
 ## 📊 Performance
 
+```python
+> python simple_benchmmark.py
+```
+
 Based on local benchmark tests (500 GET requests to localhost):
 
 ```
@@ -182,6 +186,98 @@ requests     500            259.21μs    270.01μs      3704
   → RapidHTTP is 2.51x faster than requests
 
 ======================================================================
+
+
+> python real_word_benchmark.py
+======================================================================
+  Real-world API Performance Test
+======================================================================
+
+✓ RapidHTTP loaded
+✓ requests loaded
+
+======================================================================
+  Test 1: GET Requests (JSONPlaceholder API)
+======================================================================
+Checking API https://jsonplaceholder.typicode.com/posts/1 ...
+✓ API ready
+Configuration: 10 requests
+
+Testing RapidHTTP...
+
+Testing requests...
+
+Library      Success  Mean         Median       P95          Req/sec
+---------------------------------------------------------------------------
+RapidHTTP    10         181.73ms    172.34ms    224.76ms       5.5
+requests     10         563.81ms    565.90ms    597.84ms       1.8
+
+🏆 Fastest: RapidHTTP
+  • 3.28x faster than requests
+  • Saves 393.56ms per request
+
+======================================================================
+  Test 2: JSON POST Requests (JSONPlaceholder API)
+======================================================================
+Configuration: 10 requests, payload size: 776 bytes
+
+Testing RapidHTTP JSON POST...
+
+Testing requests JSON POST...
+
+Library      Success  Request      Parse        Req/sec
+----------------------------------------------------------------------
+RapidHTTP    10         285.68ms     47.71μs       3.5
+requests     10         688.96ms     75.35μs       1.3
+
+🏆 Fastest: RapidHTTP
+  • 2.41x faster requests than requests
+  • 1.58x faster JSON parsing than requests
+
+======================================================================
+  Test 3: JSON Parser Performance (Real API Responses)
+======================================================================
+
+Small JSON from https://jsonplaceholder.typicode.com/posts/1 (5 iterations):
+
+Testing RapidHTTP JSON parser...
+
+Testing requests JSON parser...
+
+Library      Iterations   Median       Mean         Ops/sec
+----------------------------------------------------------------------
+RapidHTTP    5               33.62μs     34.01μs     29405
+requests     5               39.71μs     40.03μs     24984
+  → RapidHTTP is 1.18x faster than requests
+
+Medium JSON from https://jsonplaceholder.typicode.com/posts (10 iterations):
+
+Testing RapidHTTP JSON parser...
+
+Testing requests JSON parser...
+
+Library      Iterations   Median       Mean         Ops/sec
+----------------------------------------------------------------------
+RapidHTTP    10             167.60μs    190.04μs      5262
+requests     10             378.90μs    360.18μs      2776
+  → RapidHTTP is 2.26x faster than requests
+
+Large JSON from https://jsonplaceholder.typicode.com/comments (20 iterations):
+
+Testing RapidHTTP JSON parser...
+
+Testing requests JSON parser...
+
+Library      Iterations   Median       Mean         Ops/sec
+----------------------------------------------------------------------
+RapidHTTP    20             908.44μs    811.15μs      1233
+requests     20            1816.50μs   1672.74μs       598
+  → RapidHTTP is 2.00x faster than requests
+
+======================================================================
+Note: Network latency may affect results. Run multiple times for consistency.
+======================================================================
+
 ```
 
 _Benchmarks run on MacBook Pro M1, Python 3.11. Results may vary based on system and network conditions._
